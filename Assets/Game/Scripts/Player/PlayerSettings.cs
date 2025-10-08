@@ -10,10 +10,16 @@ namespace CEVerticalShooter.Game.Player
         private InputActionAsset inputActionAsset;
         [SerializeField]
         private string moveActionName;
+        [SerializeField] 
+        private string attackActionName;
         [SerializeField]
         private float movementSpeed;
+        [SerializeField]
+        private float attackCooldown;
 
         public InputAction MoveInputAction => inputActionAsset.FindAction(moveActionName);
+        public InputAction AttackInputAction => inputActionAsset.FindAction(attackActionName);
         public float MovementSpeed => movementSpeed;
+        public float AttackCooldown => attackCooldown;
     }
 }
