@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CEVerticalShooter
+namespace CEVerticalShooter.Core
 {
     [CreateAssetMenu(fileName = "SceneSettings", menuName = "ScriptableObjects/SceneSettings", order = 1)]
     public class SceneSettings : ScriptableObject
