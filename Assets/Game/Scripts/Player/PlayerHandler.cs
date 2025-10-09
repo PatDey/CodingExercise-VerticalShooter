@@ -1,3 +1,4 @@
+using CEVerticalShooter.Game.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,24 +6,27 @@ namespace CEVerticalShooter.Game.Player
 {
     public class PlayerHandler : ICharacterHandler
     {
-        private PlayerSettings _playerSettings;
+        private PlayerData _playerData;
         private InputAction _moveInputAction;
         private InputAction _attackInputAction;
 
         private float _lastAttackTime = 0f;
-        public PlayerHandler(PlayerSettings playerSettings)
+        public PlayerHandler(PlayerData playerdata)
         {
-            _playerSettings = playerSettings;
-            _moveInputAction = playerSettings.MoveInputAction;
-            _attackInputAction = playerSettings.AttackInputAction;
+            _playerData = playerdata;
+            _moveInputAction = playerdata.MoveInputAction;
+            _attackInputAction = playerdata.AttackInputAction;
         }
-        public Vector2 Move()
+
+        public Vector2 GetUpDirection() => Vector2.up;
+
+        public Vector2 GetMoveStep()
         {
-            return _moveInputAction.ReadValue<Vector2>() * _playerSettings.MovementSpeed * Time.deltaTime;
+            return _moveInputAction.ReadValue<Vector2>() * _playerData.MovementSpeed * Time.deltaTime;
         }
-        public bool Attack()
+        public bool TryAttack()
         {
-            if(_lastAttackTime + _playerSettings.AttackCooldown < Time.time)
+            if(_lastAttackTime + _playerData.AttackCooldown < Time.time)
             { 
                 _lastAttackTime = Time.time;
                 return _attackInputAction.IsPressed();

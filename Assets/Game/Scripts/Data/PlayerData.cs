@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace CEVerticalShooter.Game.Player
+namespace CEVerticalShooter.Game.Data
 {
-    [CreateAssetMenu(fileName = "PlayerSettings", menuName = "ScriptableObjects/PlayerSettings", order = 1)]
-    public class PlayerSettings : ScriptableObject
+    [Serializable]
+    public class PlayerData : CharacterData
     {
         [SerializeField]
         private InputActionAsset inputActionAsset;
@@ -12,14 +13,8 @@ namespace CEVerticalShooter.Game.Player
         private string moveActionName;
         [SerializeField] 
         private string attackActionName;
-        [SerializeField]
-        private float movementSpeed;
-        [SerializeField]
-        private float attackCooldown;
 
         public InputAction MoveInputAction => inputActionAsset.FindAction(moveActionName);
         public InputAction AttackInputAction => inputActionAsset.FindAction(attackActionName);
-        public float MovementSpeed => movementSpeed;
-        public float AttackCooldown => attackCooldown;
     }
 }

@@ -1,0 +1,47 @@
+using CEVerticalShooter.Core;
+using CEVerticalShooter.Game.Data;
+using Cysharp.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using UnityEngine;
+
+namespace CEVerticalShooter.Game
+{
+    public abstract class PoolHolder<DataCollection, Data, ID, Pool, PoolObject> : MonoBehaviour where DataCollection : IDataCollection<Data, ID> where Data : IData<ID> where ID : Enum where Pool : AddressablePool<PoolObject> where PoolObject : MonoBehaviour
+    {
+        protected DataCollection _dataCollection;
+        protected Dictionary<ID, Pool> _poolDictionary = new Dictionary<ID, Pool>();
+
+        public abstract void Construct(DataCollection dataCollection);
+
+        private void Awake()
+        {
+            InitializePools().Forget(); 
+        }
+        private async UniTask InitializePools()
+        {
+            foreach (ID id in Enum.GetValues(typeof(ID)))
+            {
+                Data data = _dataCollection.GetDataWithID(id);
+                GameObject poolObject = new GameObject();
+                poolObject.name = $"Pool_{id}";
+                poolObject.transform.parent = transform;
+                Pool pool = poolObject.AddComponent<Pool>();
+                await pool.InitializeAsync(data.Reference);
+                _poolDictionary.Add(id, pool);
+            }
+        }
+
+        public virtual async UniTask<PoolObject> GetPoolObjectWithIDAsync(ID id, CancellationToken token)
+        {
+            PoolObject controller = await _poolDictionary[id].TakeAsync(token);
+            return controller;
+        }
+
+        public virtual void ReturnPoolObjectWithID(ID id, PoolObject poolObject)
+        {
+            _poolDictionary[id].Return(poolObject);
+        }
+    }
+}

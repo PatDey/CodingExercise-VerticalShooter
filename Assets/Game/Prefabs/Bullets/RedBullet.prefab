@@ -10,11 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2118277330488066151, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
       propertyPath: m_Name
-      value: PlayerBullet
+      value: RedBullet
       objectReference: {fileID: 0}
-    - target: {fileID: 2118277330488066151, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 4877262410999919672, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
+      propertyPath: m_Color.b
+      value: 0.0030578389
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877262410999919672, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
+      propertyPath: m_Color.g
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877262410999919672, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
+      propertyPath: m_Color.r
+      value: 0.34117648
       objectReference: {fileID: 0}
     - target: {fileID: 6237476185218119021, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
       propertyPath: m_LocalPosition.x

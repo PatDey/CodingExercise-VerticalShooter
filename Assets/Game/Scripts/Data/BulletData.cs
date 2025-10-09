@@ -1,11 +1,12 @@
+using CEVerticalShooter.Game.Bullet;
 using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CEVerticalShooter.Game.Bullet
+namespace CEVerticalShooter.Game.Data
 {
     [Serializable]
-    public class BulletData
+    public class BulletData : IData<BulletID>
     {
         [SerializeField]
         private BulletID id;

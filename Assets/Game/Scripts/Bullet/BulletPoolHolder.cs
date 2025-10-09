@@ -1,48 +1,24 @@
+using CEVerticalShooter.Game.Data;
 using Cysharp.Threading.Tasks;
-using System;
-using System.Collections.Generic;
 using System.Threading;
-using UnityEngine;
 using VContainer;
 
 namespace CEVerticalShooter.Game.Bullet
 {
-    public class BulletPoolHolder : MonoBehaviour
+    public class BulletPoolHolder : PoolHolder<BulletDataCollection, BulletData, BulletID, BulletPool, BulletController>
     {
-        private BulletDataCollection _bulletDataCollection;
-        private Dictionary<BulletID, BulletPool> _bulletPoolDictionary = new Dictionary<BulletID, BulletPool>();
-
         [Inject]
-        private void Construct(DataCollection dataCollection)
+        public override void Construct(BulletDataCollection dataCollection)
         {
-            _bulletDataCollection = dataCollection.BulletDataCollection;
-            InitializePools().Forget();
-        }
-        private async UniTask InitializePools()
-        {
-            foreach (BulletID id in Enum.GetValues(typeof(BulletID)))
-            {
-                BulletData bulletData = _bulletDataCollection.GetBulletDataWithID(id);
-                GameObject poolObject = new GameObject();
-                poolObject.name = $"BulletPool_{id}";
-                poolObject.transform.parent = transform;
-                BulletPool bulletPool = poolObject.AddComponent<BulletPool>();
-                await bulletPool.InitializeAsync(bulletData.Reference);
-                _bulletPoolDictionary.Add(id, bulletPool);
-            }
+            _dataCollection = dataCollection;
         }
 
-        public async UniTask<BulletController> GetBulletWithIDAsync(BulletID id, CancellationToken token)
+        public override async UniTask<BulletController> GetPoolObjectWithIDAsync(BulletID id, CancellationToken token)
         {
-            BulletData bulletData = _bulletDataCollection.GetBulletDataWithID(id);
-            BulletController bulletController = await _bulletPoolDictionary[id].TakeAsync(token);
-            bulletController.Initialize(bulletData);
-            return bulletController;
-        }
-
-        public void ReturnBulletWithID(BulletID id, BulletController bullet)
-        {
-            _bulletPoolDictionary[id].Return(bullet);
+            BulletController controller = await base.GetPoolObjectWithIDAsync(id, token);  
+            BulletData bulletData = _dataCollection.GetDataWithID(id);
+            controller.Initialize(bulletData);
+            return controller;
         }
     }
 }

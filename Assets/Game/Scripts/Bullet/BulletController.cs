@@ -1,3 +1,4 @@
+using CEVerticalShooter.Game.Data;
 using UnityEngine;
 
 namespace CEVerticalShooter.Game.Bullet

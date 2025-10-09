@@ -28,11 +28,18 @@ namespace CEVerticalShooter.Game
             _bulletPoolHolder = bulletPoolHolder;
         }
 
+        public void Initialize(ICharacterHandler characterHandler, BulletPoolHolder bulletPoolHolder)
+        {
+            _characterHandler = characterHandler;
+            _bulletPoolHolder = bulletPoolHolder;
+        }
+
         private void Update()
         {
-            transform.position += (Vector3)_characterHandler.Move();
+            transform.position += (Vector3)_characterHandler.GetMoveStep();
+            transform.up = _characterHandler.GetUpDirection();
 
-            if(_characterHandler.Attack())
+            if(_characterHandler.TryAttack())
             {
                 ShootAsync().Forget();
             }
@@ -40,7 +47,7 @@ namespace CEVerticalShooter.Game
 
         private async UniTask ShootAsync()
         {
-            BulletController bulletController = await _bulletPoolHolder.GetBulletWithIDAsync(bulletID, _tokenSource.Token);
+            BulletController bulletController = await _bulletPoolHolder.GetPoolObjectWithIDAsync(bulletID, _tokenSource.Token);
             bulletController.transform.position = shootTransform.position;
             bulletController.transform.up = shootTransform.up;
         }

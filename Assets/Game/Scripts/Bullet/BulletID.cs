@@ -1,7 +1,8 @@
-namespace CEVerticalShooter
+namespace CEVerticalShooter.Game.Bullet
 {
     public enum BulletID
     {
-        Player_1 = 0,
+        Green = 0,
+        Red = 1
     }
 }

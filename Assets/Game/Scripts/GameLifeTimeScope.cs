@@ -3,6 +3,8 @@ using VContainer;
 using VContainer.Unity;
 using CEVerticalShooter.Game.Player;
 using CEVerticalShooter.Game.Bullet;
+using CEVerticalShooter.Game.Data;
+using CEVerticalShooter.Game.Enemy;
 
 namespace CEVerticalShooter.Game
 {
@@ -10,18 +12,18 @@ namespace CEVerticalShooter.Game
     {
         [Header("Components")]
         [SerializeField] BulletPoolHolder bulletPoolHolder;
+        [SerializeField] EnemyPoolHolder enemyPoolHolder;
 
         [Header("Settings")]
-        [SerializeField]
-        private PlayerSettings playerSettings;
         [SerializeField]
         private DataCollection dataCollection;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(playerSettings).AsImplementedInterfaces();
+            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData).AsImplementedInterfaces();
             builder.RegisterComponent(dataCollection);
-            builder.RegisterComponent(bulletPoolHolder).WithParameter(dataCollection);
+            builder.RegisterComponent(bulletPoolHolder).WithParameter(dataCollection.BulletDataCollection);
+            builder.RegisterComponent(enemyPoolHolder).WithParameter(dataCollection.EnemyDataCollection);
         }
     }
 }

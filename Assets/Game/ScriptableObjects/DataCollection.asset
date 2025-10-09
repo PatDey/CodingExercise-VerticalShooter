@@ -12,11 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64c890ce896746940bf2052febcc858b, type: 3}
   m_Name: DataCollection
   m_EditorClassIdentifier: Assembly-CSharp::CEVerticalShooter.Game.DataCollection
+  playerData:
+    movementSpeed: 1.5
+    attackCooldown: 0.75
+    inputActionAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    moveActionName: Move
+    attackActionName: Attack
+  enemyDataCollection:
+    data:
+    - movementSpeed: 0.13
+      attackCooldown: 3
+      id: 0
+      reference:
+        m_AssetGUID: 665e2d80324f47d4f99517ad47ada987
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      maxGroupSize: 5
+      spawnIntervall: 2
   bulletDataCollection:
     data:
     - id: 0
       reference:
         m_AssetGUID: 59769644d6a873349a00257932800da3
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      speed: 5
+      damage: 1
+    - id: 1
+      reference:
+        m_AssetGUID: 2d8b0783e89b03240a625761303fec8d
         m_SubObjectName: 
         m_SubObjectType: 
         m_SubObjectGUID: 
