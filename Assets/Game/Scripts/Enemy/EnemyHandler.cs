@@ -13,7 +13,9 @@ namespace CEVerticalShooter.Game.Enemy
         private float _flightTime = 0f;
         private Vector2 _upDirection;
 
-        private Vector3 GetPosition(float time) => (Vector3)_curve.SplineContainer.EvaluatePosition(time) + (Vector3)_curveOffset;
+        public float MovementSpeed => _enemyData.MovementSpeed;
+        public float AttackCooldown => _enemyData.AttackCooldown;
+        public Vector3 GetPosition(float time) => (Vector3)_curve.SplineContainer.EvaluatePosition(time) + (Vector3)_curveOffset;
         public EnemyHandler(EnemyData enemyData, FlightCurve curve, Vector2 curveOffset)
         {
             _enemyData = enemyData;

@@ -66,7 +66,7 @@ namespace CEVerticalShooter.Game.Enemy
                 Vector2 curveOffset = Vector2.Lerp(flightCurve.MinCurveOffset, flightCurve.MaxCurveOffset, Random.value);
                 Vector3 startPosition = (Vector3)flightCurve.SplineContainer.EvaluatePosition(0) + (Vector3)curveOffset;
 
-                PlaneController controller = await _enemyPoolHolder.GetPoolObjectWithIDAsync(randomEnemy, _tokenSource.Token);
+                EnemyController controller = await _enemyPoolHolder.GetPoolObjectWithIDAsync(randomEnemy, _tokenSource.Token);
                 controller.transform.position = startPosition;
                 EnemyHandler enemyHandler = new EnemyHandler(data, flightCurve, curveOffset);
                 controller.Initialize(enemyHandler, _bulletPoolHolder);

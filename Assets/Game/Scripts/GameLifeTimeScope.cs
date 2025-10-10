@@ -20,7 +20,7 @@ namespace CEVerticalShooter.Game
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData).AsImplementedInterfaces();
+            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData);
             builder.RegisterComponent(dataCollection);
             builder.RegisterComponent(bulletPoolHolder).WithParameter(dataCollection.BulletDataCollection);
             builder.RegisterComponent(enemyPoolHolder).WithParameter(dataCollection.EnemyDataCollection);

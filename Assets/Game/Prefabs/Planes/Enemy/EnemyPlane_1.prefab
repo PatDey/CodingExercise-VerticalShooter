@@ -71,5 +71,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5671760304278526566, guid: 1d7b58af6a7104245b3d039266e02013, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1147572578351746397}
   m_SourcePrefab: {fileID: 100100000, guid: 1d7b58af6a7104245b3d039266e02013, type: 3}
+--- !u!1 &878077291482882009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5671760304278526566, guid: 1d7b58af6a7104245b3d039266e02013, type: 3}
+  m_PrefabInstance: {fileID: 4799057466031752639}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1147572578351746397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878077291482882009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f8c642a6045a647beb581179078b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CEVerticalShooter.EnemyController
+  shootTransform: {fileID: 2495066831190968094}
+  bulletID: 1
+--- !u!4 &2495066831190968094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6933836189476389537, guid: 1d7b58af6a7104245b3d039266e02013, type: 3}
+  m_PrefabInstance: {fileID: 4799057466031752639}
+  m_PrefabAsset: {fileID: 0}
