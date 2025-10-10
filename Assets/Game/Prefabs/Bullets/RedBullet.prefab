@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 2376928135839800292, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4877262410999919672, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
       propertyPath: m_Color.b
       value: 0.0030578389

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreenBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 2376928135839800292, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6237476185218119021, guid: 5b2b2d2597e45034d8d305778fb5c14e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -13,6 +13,7 @@ namespace CEVerticalShooter.Game
         [Header("Components")]
         [SerializeField] BulletPoolHolder bulletPoolHolder;
         [SerializeField] EnemyPoolHolder enemyPoolHolder;
+        [SerializeField] PlayArea playArea;
 
         [Header("Settings")]
         [SerializeField]
@@ -20,7 +21,9 @@ namespace CEVerticalShooter.Game
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData);
+            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData).WithParameter(dataCollection.BulletDataCollection);
+
+            builder.RegisterComponent(playArea);
             builder.RegisterComponent(dataCollection);
             builder.RegisterComponent(bulletPoolHolder).WithParameter(dataCollection.BulletDataCollection);
             builder.RegisterComponent(enemyPoolHolder).WithParameter(dataCollection.EnemyDataCollection);

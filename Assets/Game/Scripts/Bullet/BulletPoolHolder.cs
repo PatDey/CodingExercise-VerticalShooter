@@ -12,13 +12,5 @@ namespace CEVerticalShooter.Game.Bullet
         {
             _dataCollection = dataCollection;
         }
-
-        public override async UniTask<BulletController> GetPoolObjectWithIDAsync(BulletID id, CancellationToken token)
-        {
-            BulletController controller = await base.GetPoolObjectWithIDAsync(id, token);  
-            BulletData bulletData = _dataCollection.GetDataWithID(id);
-            controller.Initialize(bulletData);
-            return controller;
-        }
     }
 }
