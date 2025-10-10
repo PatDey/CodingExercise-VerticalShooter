@@ -1,5 +1,6 @@
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
+using CEVerticalShooter.Game.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -37,10 +38,19 @@ namespace CEVerticalShooter.Game.Enemy
             }
 
             if(_flightTime >= 1)
-            { 
-                _enemyPoolHolder.ReturnPoolObjectWithID(_enemyHandler.ID, this);
+                ReturnToPool();
+        }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            if(playerController)
+            {
+                //Deal collisiondamage to player
+                ReturnToPool();
             }
         }
+
+        private void ReturnToPool() => _enemyPoolHolder.ReturnPoolObjectWithID(_enemyHandler.ID, this);
 
         public override BulletData GetBulletDataWithID(BulletID id) => _enemyHandler.GetBulletDataWithID(id);
     }

@@ -17,12 +17,16 @@ namespace CEVerticalShooter.Game.Data
         [SerializeField]
         private int maxGroupSize;
 
+        [SerializeField] 
+        private float collisionDamage;
+
         [SerializeField]
         private float spawnIntervall;
         public EnemyID ID => id;
         public AssetReference Reference => reference;
         public int MaxGroupSize => maxGroupSize;
         public float SpawnIntervall => spawnIntervall;
+        public float CollisionDamage => collisionDamage;
 
     }
 }

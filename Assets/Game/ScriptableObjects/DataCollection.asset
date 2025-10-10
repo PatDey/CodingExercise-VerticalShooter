@@ -30,6 +30,7 @@ MonoBehaviour:
         m_SubObjectGUID: 
         m_EditorAssetChanged: 0
       maxGroupSize: 5
+      collisionDamage: 2
       spawnIntervall: 2
   bulletDataCollection:
     data:

@@ -14,6 +14,7 @@ namespace CEVerticalShooter.Game.Enemy
         public EnemyID ID => _enemyData.ID;
         public float MovementSpeed => _enemyData.MovementSpeed;
         public float AttackCooldown => _enemyData.AttackCooldown;
+        public float CollisionDamage => _enemyData.CollisionDamage;
         public BulletData GetBulletDataWithID(BulletID id) => _bulletDataCollection.GetDataWithID(id);
         public Vector3 GetPosition(float time) => (Vector3)_curve.SplineContainer.EvaluatePosition(time) + (Vector3)_curveOffset;
         public EnemyHandler(EnemyData enemyData, BulletDataCollection bulletDataCollection, FlightCurve curve, Vector2 curveOffset)
