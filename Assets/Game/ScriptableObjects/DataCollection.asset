@@ -15,6 +15,7 @@ MonoBehaviour:
   playerData:
     movementSpeed: 1.5
     attackCooldown: 0.75
+    health: 5
     inputActionAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
     moveActionName: Move
     attackActionName: Attack
@@ -22,6 +23,7 @@ MonoBehaviour:
     data:
     - movementSpeed: 0.13
       attackCooldown: 3
+      health: 1
       id: 0
       reference:
         m_AssetGUID: 665e2d80324f47d4f99517ad47ada987

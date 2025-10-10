@@ -8,6 +8,7 @@ namespace CEVerticalShooter.Game
     {
         public float MovementSpeed { get; }
         public float AttackCooldown { get; }
+        public float Health { get; }
         public BulletData GetBulletDataWithID(BulletID id);
     }
 }

@@ -1,5 +1,6 @@
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
+using CEVerticalShooter.Game.Health;
 using CEVerticalShooter.Game.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -17,8 +18,8 @@ namespace CEVerticalShooter.Game.Enemy
         {
             _enemyPoolHolder = enemyPoolHolder;
             _enemyHandler = enemyHandler;
-            _bulletPoolHolder = bulletPoolHolder;
-            _playArea = playArea;
+            Initialize(bulletPoolHolder, playArea, _enemyHandler.Health);
+
             _lastAttackTime = 0f;
             _flightTime = 0f;
         }
@@ -45,13 +46,27 @@ namespace CEVerticalShooter.Game.Enemy
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
             if(playerController)
             {
-                //Deal collisiondamage to player
+                playerController.DealDamage(_enemyHandler.CollisionDamage);
                 ReturnToPool();
+            }
+
+            BulletController bulletController = collision.gameObject.GetComponent<BulletController>();
+            if(bulletController)
+            {
+                DealDamage(bulletController.Damage);
             }
         }
 
         private void ReturnToPool() => _enemyPoolHolder.ReturnPoolObjectWithID(_enemyHandler.ID, this);
 
         public override BulletData GetBulletDataWithID(BulletID id) => _enemyHandler.GetBulletDataWithID(id);
+
+        public override void DealDamage(float damage)
+        {
+            _healthHandler.RemoveHealth(damage);
+
+            if(_healthHandler.IsDead)
+                ReturnToPool();
+        }
     }
 }

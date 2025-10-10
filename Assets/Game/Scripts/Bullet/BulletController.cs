@@ -8,6 +8,8 @@ namespace CEVerticalShooter.Game.Bullet
         private BulletPoolHolder _bulletPoolHolder;
         private BulletData _data;
         private PlayArea _playArea;
+
+        public float Damage => _data.Damage;
         public void Initialize(BulletPoolHolder bulletPoolHolder, BulletData data, PlayArea playArea)
         {
             _data = data;

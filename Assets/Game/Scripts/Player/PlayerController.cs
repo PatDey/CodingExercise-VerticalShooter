@@ -18,8 +18,7 @@ namespace CEVerticalShooter.Game.Player
         private void Construct(PlayerHandler playerHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder)
         {
             _playerHandler = playerHandler;
-            _playArea = playArea;
-            _bulletPoolHolder = bulletPoolHolder;
+            Initialize(bulletPoolHolder, playArea, playerHandler.Health);
         }
 
         private void Update()
@@ -55,5 +54,15 @@ namespace CEVerticalShooter.Game.Player
         }
 
         public override BulletData GetBulletDataWithID(BulletID id) => _playerHandler.GetBulletDataWithID(id);
+
+        public override void DealDamage(float damage)
+        {
+            _healthHandler.RemoveHealth(damage);
+
+            if(_healthHandler.IsDead)
+            {
+                //TODO remove life or end game
+            }
+        }
     }
 }

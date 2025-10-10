@@ -10,8 +10,11 @@ namespace CEVerticalShooter.Game.Data
         protected float movementSpeed;
         [SerializeField]
         protected float attackCooldown;
+        [SerializeField]
+        protected float health;
 
         public float MovementSpeed => movementSpeed;
         public float AttackCooldown => attackCooldown;
+        public float Health => health;
     }
 }

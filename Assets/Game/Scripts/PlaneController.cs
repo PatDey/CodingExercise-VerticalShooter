@@ -1,5 +1,6 @@
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
+using CEVerticalShooter.Game.Health;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
@@ -20,6 +21,13 @@ namespace CEVerticalShooter.Game
         protected readonly CancellationTokenSource _tokenSource = new();
         protected BulletPoolHolder _bulletPoolHolder;
         protected PlayArea _playArea;
+        protected HealthHandler _healthHandler;
+        public void Initialize(BulletPoolHolder bulletPoolHolder, PlayArea playArea, float health)
+        {
+            _bulletPoolHolder = bulletPoolHolder;
+            _playArea = playArea;
+            _healthHandler = new HealthHandler(health);
+        }
 
         protected async UniTask ShootAsync()
         {
@@ -31,6 +39,7 @@ namespace CEVerticalShooter.Game
             bulletController.gameObject.layer = gameObject.layer;
         }
         public abstract BulletData GetBulletDataWithID(BulletID id);
+        public abstract void DealDamage(float damage);
 
         public void Dispose()
         {
