@@ -1,6 +1,5 @@
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
-using CEVerticalShooter.Game.Health;
 using CEVerticalShooter.Game.Player;
 using CEVerticalShooter.Game.Score;
 using Cysharp.Threading.Tasks;
@@ -16,15 +15,27 @@ namespace CEVerticalShooter.Game.Enemy
         private float _lastAttackTime = 0f;
         private float _flightTime = 0f;
 
-        public void Initialize(EnemyHandler enemyHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, EnemyPoolHolder enemyPoolHolder, IScoreService scoreService)
+        public void Initialize(EnemyHandler enemyHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, EnemyPoolHolder enemyPoolHolder, IScoreService scoreService, IGameService gameService)
         {
             _enemyPoolHolder = enemyPoolHolder;
             _enemyHandler = enemyHandler;
             _scoreService = scoreService;
-            Initialize(bulletPoolHolder, playArea, _enemyHandler.Health);
+            Initialize(gameService, bulletPoolHolder, playArea, _enemyHandler.Health);
 
             _lastAttackTime = 0f;
             _flightTime = 0f;
+        }
+        private async void Awake()
+        {
+            await UniTask.WaitUntil(() => _isInitialized);
+
+            _gameService.OnGameOver += GameService_OnGameOver;
+        }
+
+        private void OnDestroy()
+        {
+            if(_gameService != null)
+                _gameService.OnGameOver -= GameService_OnGameOver;
         }
 
         private void Update()
@@ -68,5 +79,7 @@ namespace CEVerticalShooter.Game.Enemy
                 ReturnToPool();
             }
         }
+
+        private void GameService_OnGameOver() => ReturnToPool();
     }
 }

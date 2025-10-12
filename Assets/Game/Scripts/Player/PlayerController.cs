@@ -1,6 +1,7 @@
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using VContainer;
 
@@ -14,15 +15,33 @@ namespace CEVerticalShooter.Game.Player
         private PlayerHandler _playerHandler;
         private float _lastAttackTime = 0f;
 
+        private Vector2 _startPosition;
+
         [Inject]
-        private void Construct(PlayerHandler playerHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder)
+        private void Construct(PlayerHandler playerHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, IGameService gameService)
         {
             _playerHandler = playerHandler;
-            Initialize(bulletPoolHolder, playArea, playerHandler.Health);
+            Initialize(gameService, bulletPoolHolder, playArea, playerHandler.Health);
+        }
+
+        private void Awake()
+        {
+            _startPosition = transform.position;
+            _gameService.OnNewGame += GameService_OnNewGame;
+        }
+
+        private void OnDestroy()
+        {
+            _gameService.OnNewGame -= GameService_OnNewGame;
         }
 
         private void Update()
         {
+            if (!_gameService.IsRunning)
+            {
+                return;
+            }
+
             Vector3 newPosition = transform.position + ((Vector3)_playerHandler.MoveInputAction.ReadValue<Vector2>() * _playerHandler.MovementSpeed * Time.deltaTime);
 
             float halfSizeX = planeSize.x * 0.5f;
@@ -61,8 +80,23 @@ namespace CEVerticalShooter.Game.Player
 
             if(_healthHandler.IsDead)
             {
-                //TODO remove life or end game
+                _gameService.ReduceLife();
+                if(_gameService.Lives > 0)
+                {
+                    _healthHandler.ResetHealth();
+                    //add Invincible frame
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
             }
+        }
+
+        private void GameService_OnNewGame()
+        {
+            transform.position = _startPosition;
+            gameObject.SetActive(true);
         }
     }
 }

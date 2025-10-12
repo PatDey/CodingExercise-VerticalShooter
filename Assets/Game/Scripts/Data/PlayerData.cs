@@ -13,8 +13,11 @@ namespace CEVerticalShooter.Game.Data
         private string moveActionName;
         [SerializeField] 
         private string attackActionName;
+        [SerializeField]
+        private int lives;
 
         public InputAction MoveInputAction => inputActionAsset.FindAction(moveActionName);
         public InputAction AttackInputAction => inputActionAsset.FindAction(attackActionName);
+        public int Lives => lives;
     }
 }

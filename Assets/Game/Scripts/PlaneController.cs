@@ -22,18 +22,22 @@ namespace CEVerticalShooter.Game
         protected BulletPoolHolder _bulletPoolHolder;
         protected PlayArea _playArea;
         protected HealthHandler _healthHandler;
-        public void Initialize(BulletPoolHolder bulletPoolHolder, PlayArea playArea, float health)
+        protected IGameService _gameService;
+        protected bool _isInitialized;
+        public void Initialize(IGameService gameService, BulletPoolHolder bulletPoolHolder, PlayArea playArea, float health)
         {
+            _gameService = gameService;
             _bulletPoolHolder = bulletPoolHolder;
             _playArea = playArea;
             _healthHandler = new HealthHandler(health);
+            _isInitialized = true;
         }
 
         protected async UniTask ShootAsync()
         {
             BulletController bulletController = await _bulletPoolHolder.GetPoolObjectWithIDAsync(bulletID, _tokenSource.Token);
             BulletData bulletData = GetBulletDataWithID(bulletID);
-            bulletController.Initialize(_bulletPoolHolder, bulletData, _playArea);
+            bulletController.Initialize(_bulletPoolHolder, bulletData, _playArea, _gameService);
             bulletController.transform.position = shootTransform.position;
             bulletController.transform.up = shootTransform.up;
             bulletController.gameObject.layer = gameObject.layer;

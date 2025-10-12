@@ -4,9 +4,7 @@ using CEVerticalShooter.Game.Score;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Threading;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using VContainer;
 using Random = UnityEngine.Random;
@@ -30,12 +28,13 @@ namespace CEVerticalShooter.Game.Enemy
         private BulletPoolHolder _bulletPoolHolder;
         private PlayArea _playArea;
         private IScoreService _scoreService;
+        private IGameService _gameService;
 
         private float _lastSpawnTime;
         private bool _isSpawning;
 
         [Inject]
-        private void Construct(DataCollection dataCollection, EnemyPoolHolder enemyPoolHolder, BulletPoolHolder bulletPoolHolder, PlayArea playArea, IScoreService scoreService)
+        private void Construct(DataCollection dataCollection, EnemyPoolHolder enemyPoolHolder, BulletPoolHolder bulletPoolHolder, PlayArea playArea, IScoreService scoreService, IGameService gameService)
         {
             _enemyDataCollection = dataCollection.EnemyDataCollection;
             _bulletDataCollection = dataCollection.BulletDataCollection;
@@ -43,19 +42,19 @@ namespace CEVerticalShooter.Game.Enemy
             _bulletPoolHolder = bulletPoolHolder;
             _playArea = playArea;
             _scoreService = scoreService;
+            _gameService = gameService;
         }
 
         public void Update()
         {
-            //only update when game is running
-
-            if(_lastSpawnTime + timeBetweenSpawns < Time.time && !_isSpawning)
+            if (_gameService.IsRunning) 
             {
-                _isSpawning = true;
-                SpawnEnemies().Forget();
+                if(_lastSpawnTime + timeBetweenSpawns < Time.time && !_isSpawning)
+                {
+                    _isSpawning = true;
+                    SpawnEnemies().Forget();
+                }
             }
-
-
         }
         private async UniTask SpawnEnemies()
         {
@@ -75,7 +74,7 @@ namespace CEVerticalShooter.Game.Enemy
                 EnemyController controller = await _enemyPoolHolder.GetPoolObjectWithIDAsync(randomEnemy, _tokenSource.Token);
                 controller.transform.position = startPosition;
                 EnemyHandler enemyHandler = new EnemyHandler(data, _bulletDataCollection, flightCurve, curveOffset);
-                controller.Initialize(enemyHandler, _playArea, _bulletPoolHolder, _enemyPoolHolder, _scoreService);
+                controller.Initialize(enemyHandler, _playArea, _bulletPoolHolder, _enemyPoolHolder, _scoreService, _gameService);
                 await UniTask.WaitForSeconds(data.SpawnIntervall, cancellationToken: _tokenSource.Token);
             }
 

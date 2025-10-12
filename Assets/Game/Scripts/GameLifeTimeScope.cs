@@ -24,6 +24,7 @@ namespace CEVerticalShooter.Game
         {
             builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData).WithParameter(dataCollection.BulletDataCollection);
             builder.Register<ScoreService>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<GameService>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData).AsImplementedInterfaces();
 
             builder.RegisterComponent(playArea);
             builder.RegisterComponent(dataCollection);

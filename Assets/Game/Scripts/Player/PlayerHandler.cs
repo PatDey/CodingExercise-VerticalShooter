@@ -11,6 +11,7 @@ namespace CEVerticalShooter.Game.Player
         public float MovementSpeed => _playerData.MovementSpeed;
         public float AttackCooldown => _playerData.AttackCooldown;
         public float Health => _playerData.Health;
+        public int Lifes => Lifes;
         public InputAction MoveInputAction => _playerData.MoveInputAction;
         public InputAction AttackInputAction => _playerData.AttackInputAction;
 
