@@ -5,6 +5,7 @@ using CEVerticalShooter.Game.Player;
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
 using CEVerticalShooter.Game.Enemy;
+using CEVerticalShooter.Game.Score;
 
 namespace CEVerticalShooter.Game
 {
@@ -22,6 +23,7 @@ namespace CEVerticalShooter.Game
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData).WithParameter(dataCollection.BulletDataCollection);
+            builder.Register<ScoreService>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.RegisterComponent(playArea);
             builder.RegisterComponent(dataCollection);

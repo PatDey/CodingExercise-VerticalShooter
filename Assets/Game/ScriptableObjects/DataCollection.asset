@@ -31,6 +31,7 @@ MonoBehaviour:
         m_SubObjectType: 
         m_SubObjectGUID: 
         m_EditorAssetChanged: 0
+      score: 100
       maxGroupSize: 5
       collisionDamage: 2
       spawnIntervall: 2

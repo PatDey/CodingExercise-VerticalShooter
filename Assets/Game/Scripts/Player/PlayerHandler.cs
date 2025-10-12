@@ -1,6 +1,5 @@
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace CEVerticalShooter.Game.Player
