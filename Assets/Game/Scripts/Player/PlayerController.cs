@@ -1,7 +1,7 @@
 using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
+using CEVerticalShooter.Game.UI;
 using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 using VContainer;
 
@@ -9,6 +9,11 @@ namespace CEVerticalShooter.Game.Player
 {
     public class PlayerController : PlaneController
     {
+        [Header("Components")]
+        [SerializeField]
+        private HealthBar healthBar;
+
+        [Header("Settings")]
         [SerializeField]
         private Vector2 planeSize;
 
@@ -22,6 +27,7 @@ namespace CEVerticalShooter.Game.Player
         {
             _playerHandler = playerHandler;
             Initialize(gameService, bulletPoolHolder, playArea, playerHandler.Health);
+            healthBar.Initialize(_healthHandler);
         }
 
         private void Awake()
