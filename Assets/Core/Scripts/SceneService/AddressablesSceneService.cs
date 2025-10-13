@@ -34,6 +34,8 @@ namespace CEVerticalShooter.Core.Scenes
                 await Addressables.UnloadSceneAsync(_currentScene);
             }
 
+            await Resources.UnloadUnusedAssets();
+
             AssetReference sceneToLoad =_settings.GetSceneAsset(scene);
             _currentScene = await Addressables.LoadSceneAsync(sceneToLoad, UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }

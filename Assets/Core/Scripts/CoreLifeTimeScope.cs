@@ -1,3 +1,4 @@
+using CEVerticalShooter.Core.Save;
 using CEVerticalShooter.Core.Scenes;
 using UnityEngine;
 using VContainer;
@@ -15,6 +16,7 @@ namespace CEVerticalShooter.Core
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<AddressablesSceneService>(Lifetime.Singleton).WithParameter(sceneSettings).AsImplementedInterfaces();
+            builder.Register<DataService>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.RegisterEntryPoint<CoreEntryPoint>().WithParameter(startSceneID);
         }

@@ -5,6 +5,7 @@ namespace CEVerticalShooter.Game
     public interface IGameService
     {
         public bool IsRunning { get; }
+        public bool HasNewHighscore { get; }
         public int Lives{ get;}
 
         public Action<int> OnLivesChange { get; set; }

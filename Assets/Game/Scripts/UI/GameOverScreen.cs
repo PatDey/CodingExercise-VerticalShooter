@@ -15,6 +15,8 @@ namespace CEVerticalShooter.Game.UI
         [SerializeField]
         private TextMeshProUGUI scoreText;
         [SerializeField]
+        private GameObject highscoreGameObject;
+        [SerializeField]
         private Button playAgainButton;
         [SerializeField]
         private Button backToMenuButton;
@@ -48,6 +50,7 @@ namespace CEVerticalShooter.Game.UI
         private void GameService_OnGameOver()
         {
             scoreText.text = _scoreService.Score.ToString();
+            highscoreGameObject.SetActive(_gameService.HasNewHighscore);
             Show();
         }
 

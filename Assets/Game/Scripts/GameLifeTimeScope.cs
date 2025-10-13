@@ -6,6 +6,7 @@ using CEVerticalShooter.Game.Bullet;
 using CEVerticalShooter.Game.Data;
 using CEVerticalShooter.Game.Enemy;
 using CEVerticalShooter.Game.Score;
+using CEVerticalShooter.Core.Save;
 
 namespace CEVerticalShooter.Game
 {
