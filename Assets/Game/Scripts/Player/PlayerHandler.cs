@@ -15,7 +15,7 @@ namespace CEVerticalShooter.Game.Player
         public InputAction MoveInputAction => _playerData.MoveInputAction;
         public InputAction AttackInputAction => _playerData.AttackInputAction;
 
-        public BulletData GetBulletDataWithID(BulletID id) => _bulletDataCollection.GetDataWithID(id);
+        public bool TryToGetBulletDataWithID(BulletID id, out BulletData data) => _bulletDataCollection.TryToGetDataWithID(id, out data);
 
         public PlayerHandler(PlayerData playerdata, BulletDataCollection bulletDataCollection)
         {

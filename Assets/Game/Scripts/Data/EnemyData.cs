@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 namespace CEVerticalShooter.Game.Data
 {
     [Serializable]
-    public class EnemyData : CharacterData, IData<EnemyID>
+    public class EnemyData : CharacterData, IData<EnemyID>, IAssetReference
     {
         [SerializeField]
         private EnemyID id;

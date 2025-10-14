@@ -1,14 +1,17 @@
 using CEVerticalShooter.Core.Save;
 using CEVerticalShooter.Game.Data;
 using CEVerticalShooter.Game.Score;
+using CEVerticalShooter.Game.WinCondition;
 using System;
+using VContainer.Unity;
 
 namespace CEVerticalShooter.Game
 {
-    public class GameService : IGameService
+    public class GameService : IGameService, ITickable
     {
         private IScoreService _scoreService;
         private IDataService<GameData> _dataService;
+        private IWinConditionService _winConditionService;
         private PlayerData _playerData;
 
         private bool _isRunning;
@@ -32,10 +35,11 @@ namespace CEVerticalShooter.Game
         public Action OnGameOver { get; set; }
         public Action OnNewGame {  get; set; }
 
-        public GameService(IScoreService scoreService, IDataService<GameData> dataService, PlayerData playerData) 
+        public GameService(IScoreService scoreService, IDataService<GameData> dataService, IWinConditionService winConditionService, PlayerData playerData) 
         {
             _scoreService = scoreService;
             _dataService = dataService;
+            _winConditionService = winConditionService;
             _playerData = playerData;
             StartGame();
         }
@@ -43,6 +47,7 @@ namespace CEVerticalShooter.Game
         public void StartGame()
         {
             _scoreService.ResetScore();
+            _winConditionService.ResetWinConditionTracker();
             Lives = _playerData.Lives;
             _hasNewHighscore = false;
             OnNewGame?.Invoke();
@@ -64,6 +69,18 @@ namespace CEVerticalShooter.Game
                     _hasNewHighscore = true;
                 }
 
+                OnGameOver?.Invoke();
+            }
+        }
+
+        public void Tick()
+        {
+            if(!IsRunning)
+                return;
+
+            if(_winConditionService.HasReachedAnyWinCondition)
+            {
+                _isRunning = false;
                 OnGameOver?.Invoke();
             }
         }

@@ -35,14 +35,16 @@ namespace CEVerticalShooter.Game
 
         protected async UniTask ShootAsync()
         {
-            BulletController bulletController = await _bulletPoolHolder.GetPoolObjectWithIDAsync(bulletID, _tokenSource.Token);
-            BulletData bulletData = GetBulletDataWithID(bulletID);
-            bulletController.Initialize(_bulletPoolHolder, bulletData, _playArea, _gameService);
-            bulletController.transform.position = shootTransform.position;
-            bulletController.transform.up = shootTransform.up;
-            bulletController.gameObject.layer = gameObject.layer;
+            if (TryToGetBulletDataWithID(bulletID, out BulletData data))
+            {
+                BulletController bulletController = await _bulletPoolHolder.GetPoolObjectWithIDAsync(bulletID, _tokenSource.Token);
+                bulletController.Initialize(_bulletPoolHolder, data, _playArea, _gameService);
+                bulletController.transform.position = shootTransform.position;
+                bulletController.transform.up = shootTransform.up;
+                bulletController.gameObject.layer = gameObject.layer;
+            }
         }
-        public abstract BulletData GetBulletDataWithID(BulletID id);
+        public abstract bool TryToGetBulletDataWithID(BulletID id, out BulletData data);
         public abstract void DealDamage(float damage);
 
         public void Dispose()

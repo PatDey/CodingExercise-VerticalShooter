@@ -1,6 +1,7 @@
 using CEVerticalShooter.Core.Scenes;
 using CEVerticalShooter.Core.UI;
 using CEVerticalShooter.Game.Score;
+using CEVerticalShooter.Game.WinCondition;
 using System;
 using TMPro;
 using UnityEngine;
@@ -15,22 +16,32 @@ namespace CEVerticalShooter.Game.UI
         [SerializeField]
         private TextMeshProUGUI scoreText;
         [SerializeField]
+        private TextMeshProUGUI headerText;
+        [SerializeField]
         private GameObject highscoreGameObject;
         [SerializeField]
         private Button playAgainButton;
         [SerializeField]
         private Button backToMenuButton;
 
+        [Header("Settings")]
+        [SerializeField]
+        private string gameOverLoseText;
+        [SerializeField]
+        private string gameOverWinText;
+
         private IScoreService _scoreService;
         private ISceneService _sceneService;
         private IGameService _gameService;
+        private IWinConditionService _winConditionService;
 
         [Inject]
-        private void Construct(IScoreService scoreService, ISceneService sceneService, IGameService gameService)
+        private void Construct(IScoreService scoreService, ISceneService sceneService, IGameService gameService, IWinConditionService winConditionService)
         {
             _scoreService = scoreService;
             _sceneService = sceneService;
             _gameService = gameService;
+            _winConditionService = winConditionService;
         }
 
         public override void Awake()
@@ -49,6 +60,7 @@ namespace CEVerticalShooter.Game.UI
 
         private void GameService_OnGameOver()
         {
+            headerText.text = _winConditionService.HasReachedAnyWinCondition ? gameOverWinText : gameOverLoseText;
             scoreText.text = _scoreService.Score.ToString();
             highscoreGameObject.SetActive(_gameService.HasNewHighscore);
             Show();

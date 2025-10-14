@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace CEVerticalShooter.Game
 {
-    public abstract class PoolHolder<DataCollection, Data, ID, Pool, PoolObject> : MonoBehaviour where DataCollection : IDataCollection<Data, ID> where Data : IData<ID> where ID : Enum where Pool : AddressablePool<PoolObject> where PoolObject : MonoBehaviour
+    public abstract class PoolHolder<DataCollection, Data, ID, Pool, PoolObject> : MonoBehaviour where DataCollection : IDataCollection<Data, ID> where Data : IData<ID>, IAssetReference where ID : Enum where Pool : AddressablePool<PoolObject> where PoolObject : MonoBehaviour
     {
         protected DataCollection _dataCollection;
         protected Dictionary<ID, Pool> _poolDictionary = new Dictionary<ID, Pool>();
@@ -23,13 +23,15 @@ namespace CEVerticalShooter.Game
         {
             foreach (ID id in Enum.GetValues(typeof(ID)))
             {
-                Data data = _dataCollection.GetDataWithID(id);
-                GameObject poolObject = new GameObject();
-                poolObject.name = $"Pool_{id}";
-                poolObject.transform.parent = transform;
-                Pool pool = poolObject.AddComponent<Pool>();
-                await pool.InitializeAsync(data.Reference);
-                _poolDictionary.Add(id, pool);
+                if(_dataCollection.TryToGetDataWithID(id, out Data data))
+                { 
+                    GameObject poolObject = new GameObject();
+                    poolObject.name = $"Pool_{id}";
+                    poolObject.transform.parent = transform;
+                    Pool pool = poolObject.AddComponent<Pool>();
+                    await pool.InitializeAsync(data.Reference);
+                    _poolDictionary.Add(id, pool);
+                }
             }
         }
 

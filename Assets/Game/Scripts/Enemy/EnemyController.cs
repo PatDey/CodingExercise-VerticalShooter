@@ -11,15 +11,18 @@ namespace CEVerticalShooter.Game.Enemy
     {
         private EnemyPoolHolder _enemyPoolHolder;
         private EnemyHandler _enemyHandler;
+        private WinConditionTracker _winConditionTracker;
         private IScoreService _scoreService;
         private float _lastAttackTime = 0f;
         private float _flightTime = 0f;
 
-        public void Initialize(EnemyHandler enemyHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, EnemyPoolHolder enemyPoolHolder, IScoreService scoreService, IGameService gameService)
+        public void Initialize(EnemyHandler enemyHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, EnemyPoolHolder enemyPoolHolder, 
+                                WinConditionTracker winConditionTracker, IScoreService scoreService, IGameService gameService)
         {
             _enemyPoolHolder = enemyPoolHolder;
             _enemyHandler = enemyHandler;
             _scoreService = scoreService;
+            _winConditionTracker = winConditionTracker;
             Initialize(gameService, bulletPoolHolder, playArea, _enemyHandler.Health);
 
             _lastAttackTime = 0f;
@@ -67,7 +70,7 @@ namespace CEVerticalShooter.Game.Enemy
 
         private void ReturnToPool() => _enemyPoolHolder.ReturnPoolObjectWithID(_enemyHandler.ID, this);
 
-        public override BulletData GetBulletDataWithID(BulletID id) => _enemyHandler.GetBulletDataWithID(id);
+        public override bool TryToGetBulletDataWithID(BulletID id, out BulletData data) => _enemyHandler.TryToGetBulletDataWithID(id, out data);
 
         public override void DealDamage(float damage)
         {
@@ -76,6 +79,7 @@ namespace CEVerticalShooter.Game.Enemy
             if(_healthHandler.IsDead)
             { 
                 _scoreService.AddScore(_enemyHandler.Score);
+                _winConditionTracker.IncreaseEnemiesDefeated();
                 ReturnToPool();
             }
         }

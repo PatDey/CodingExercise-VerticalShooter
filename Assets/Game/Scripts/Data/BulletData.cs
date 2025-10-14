@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 namespace CEVerticalShooter.Game.Data
 {
     [Serializable]
-    public class BulletData : IData<BulletID>
+    public class BulletData : IData<BulletID>, IAssetReference
     {
         [SerializeField]
         private BulletID id;

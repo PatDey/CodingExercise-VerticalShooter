@@ -602,9 +602,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CEVerticalShooter.Game.UI.GameOverScreen
   scoreText: {fileID: 2292462396646193856}
+  headerText: {fileID: 1019678821508104133}
   highscoreGameObject: {fileID: 2130668976408385246}
   playAgainButton: {fileID: 7048613243628735356}
   backToMenuButton: {fileID: 930803801835617614}
+  gameOverLoseText: Game Over
+  gameOverWinText: You Win!
 --- !u!95 &1511481246051802481
 Animator:
   serializedVersion: 7

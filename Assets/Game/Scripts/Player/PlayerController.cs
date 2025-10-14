@@ -34,11 +34,16 @@ namespace CEVerticalShooter.Game.Player
         {
             _startPosition = transform.position;
             _gameService.OnNewGame += GameService_OnNewGame;
+            _gameService.OnGameOver += GameService_OnGameOver;
         }
 
         private void OnDestroy()
         {
-            _gameService.OnNewGame -= GameService_OnNewGame;
+            if(_gameService != null)
+            { 
+                _gameService.OnNewGame -= GameService_OnNewGame;
+                _gameService.OnGameOver -= GameService_OnGameOver;
+            }
         }
 
         private void Update()
@@ -78,7 +83,7 @@ namespace CEVerticalShooter.Game.Player
             Gizmos.DrawWireCube(Vector3.zero, planeSize);
         }
 
-        public override BulletData GetBulletDataWithID(BulletID id) => _playerHandler.GetBulletDataWithID(id);
+        public override bool TryToGetBulletDataWithID(BulletID id, out BulletData data) => _playerHandler.TryToGetBulletDataWithID(id, out data);
 
         public override void DealDamage(float damage)
         {
@@ -92,17 +97,18 @@ namespace CEVerticalShooter.Game.Player
                     _healthHandler.ResetHealth();
                     //add Invincible frame
                 }
-                else
-                {
-                    gameObject.SetActive(false);
-                }
             }
         }
 
         private void GameService_OnNewGame()
         {
+            _healthHandler.ResetHealth();
             transform.position = _startPosition;
             gameObject.SetActive(true);
+        }
+        private void GameService_OnGameOver()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

@@ -11,10 +11,12 @@ namespace CEVerticalShooter.Game.Data
         private EnemyDataCollection enemyDataCollection;
         [SerializeField]
         private BulletDataCollection bulletDataCollection;
+        [SerializeField]
+        private WinConditionDataCollection winConditionDataCollection;
 
         public PlayerData PlayerData => playerData;
         public EnemyDataCollection EnemyDataCollection => enemyDataCollection;
-
         public BulletDataCollection BulletDataCollection => bulletDataCollection;
+        public WinConditionDataCollection WinConditionDataCollection => winConditionDataCollection;
     }
 }
