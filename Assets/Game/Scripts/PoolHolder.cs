@@ -13,6 +13,8 @@ namespace CEVerticalShooter.Game
         protected DataCollection _dataCollection;
         protected Dictionary<ID, Pool> _poolDictionary = new Dictionary<ID, Pool>();
 
+        private bool _isInitialized;
+
         public abstract void Construct(DataCollection dataCollection);
 
         private void Awake()
@@ -33,10 +35,14 @@ namespace CEVerticalShooter.Game
                     _poolDictionary.Add(id, pool);
                 }
             }
+
+            _isInitialized = true;
         }
 
         public virtual async UniTask<PoolObject> GetPoolObjectWithIDAsync(ID id, CancellationToken token)
         {
+            await UniTask.WaitUntil(() => _isInitialized, cancellationToken: token);
+
             PoolObject controller = await _poolDictionary[id].TakeAsync(token);
             return controller;
         }

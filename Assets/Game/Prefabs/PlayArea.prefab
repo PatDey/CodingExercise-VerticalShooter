@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c068394ed2ac6fa42993ba10bd27f385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CEVerticalShooter.PlayArea
-  areaSize: {x: 7.25, y: 10}
+  areaSize: {x: 5.7, y: 10}

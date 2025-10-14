@@ -17,10 +17,6 @@ namespace CEVerticalShooter.Game.Enemy
         [SerializeField]
         private List<FlightCurve> flightCurves;
 
-        [Header("Settings")]
-        [SerializeField]
-        private float timeBetweenSpawns;
-
         private CancellationTokenSource _tokenSource = new();
         private EnemyDataCollection _enemyDataCollection;
         private BulletDataCollection _bulletDataCollection;
@@ -70,7 +66,7 @@ namespace CEVerticalShooter.Game.Enemy
         {
             if (_gameService.IsRunning) 
             {
-                if(_lastSpawnTime + timeBetweenSpawns < Time.time && !_isSpawning)
+                if(_lastSpawnTime + _enemyDataCollection.TimeBetweenSpawns < Time.time && !_isSpawning)
                 {
                     _isSpawning = true;
                     SpawnEnemies(_tokenSource.Token).Forget();
@@ -84,7 +80,7 @@ namespace CEVerticalShooter.Game.Enemy
 
             if(_enemyDataCollection.TryToGetDataWithID(randomEnemy, out EnemyData data))
             { 
-                int groupSize = Random.Range(1, data.MaxGroupSize + 1);
+                int groupSize = Random.Range(data.MinGroupSize, data.MaxGroupSize + 1);
 
                 for (int i = 0; i < groupSize; i++)
                 {

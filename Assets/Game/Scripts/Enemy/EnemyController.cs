@@ -25,7 +25,7 @@ namespace CEVerticalShooter.Game.Enemy
             _winConditionTracker = winConditionTracker;
             Initialize(gameService, bulletPoolHolder, playArea, _enemyHandler.Health);
 
-            _lastAttackTime = 0f;
+            _lastAttackTime = Time.time;
             _flightTime = 0f;
         }
         private async void Awake()

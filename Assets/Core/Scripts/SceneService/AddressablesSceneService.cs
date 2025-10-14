@@ -27,6 +27,8 @@ namespace CEVerticalShooter.Core.Scenes
 
         public async UniTask LoadSceneAsync(SceneID scene, CancellationToken cancellationToken)
         {
+            OnBeforeSceneChange?.Invoke();
+
             await Addressables.InitializeAsync();
 
             if(_currentScene.Scene.isLoaded)
@@ -38,6 +40,8 @@ namespace CEVerticalShooter.Core.Scenes
 
             AssetReference sceneToLoad =_settings.GetSceneAsset(scene);
             _currentScene = await Addressables.LoadSceneAsync(sceneToLoad, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+
+            OnAfterSceneChange?.Invoke();
         }
         
         public void Dispose()

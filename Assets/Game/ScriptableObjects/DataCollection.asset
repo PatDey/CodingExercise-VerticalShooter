@@ -33,9 +33,11 @@ MonoBehaviour:
         m_SubObjectGUID: 
         m_EditorAssetChanged: 0
       score: 100
-      maxGroupSize: 5
-      collisionDamage: 2
+      minGroupSize: 3
+      maxGroupSize: 8
       spawnIntervall: 2
+      collisionDamage: 2
+    timeBetweenSpawns: 2
   bulletDataCollection:
     data:
     - id: 0
