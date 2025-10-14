@@ -34,6 +34,7 @@ namespace CEVerticalShooter.Game
         public Action<int> OnLivesChange { get; set; }
         public Action OnGameOver { get; set; }
         public Action OnNewGame {  get; set; }
+        public Action OnGameStart {  get; set; }
 
         public GameService(IScoreService scoreService, IDataService<GameData> dataService, IWinConditionService winConditionService, PlayerData playerData) 
         {
@@ -41,17 +42,21 @@ namespace CEVerticalShooter.Game
             _dataService = dataService;
             _winConditionService = winConditionService;
             _playerData = playerData;
-            StartGame();
+            ResetGame();
         }
 
         public void StartGame()
+        {
+            _isRunning = true;
+            OnGameStart?.Invoke();
+        }
+        public void ResetGame()
         {
             _scoreService.ResetScore();
             _winConditionService.ResetWinConditionTracker();
             Lives = _playerData.Lives;
             _hasNewHighscore = false;
             OnNewGame?.Invoke();
-            _isRunning = true;
         }
 
         public void ReduceLife()

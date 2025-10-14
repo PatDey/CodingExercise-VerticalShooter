@@ -68,7 +68,7 @@ namespace CEVerticalShooter.Game.UI
 
         private void PlayAgainButton_OnClick()
         {
-            _gameService.StartGame();
+            _gameService.ResetGame();
             Hide();
         }
 

@@ -50,6 +50,8 @@ namespace CEVerticalShooter.Game.Player
         {
             if (!_gameService.IsRunning)
             {
+                if(_playerHandler.MoveInputAction.ReadValue<Vector2>() != Vector2.zero || _playerHandler.AttackInputAction.IsPressed())
+                    _gameService.StartGame();
                 return;
             }
 
