@@ -1,5 +1,4 @@
 using CEVerticalShooter.Game.Data;
-using CEVerticalShooter.Game.Enemy;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

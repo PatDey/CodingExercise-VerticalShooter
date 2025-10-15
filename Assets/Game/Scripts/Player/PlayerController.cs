@@ -23,10 +23,10 @@ namespace CEVerticalShooter.Game.Player
         private Vector2 _startPosition;
 
         [Inject]
-        private void Construct(PlayerHandler playerHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, IGameService gameService)
+        private void Construct(PlayerHandler playerHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, DataCollection dataCollection, IGameService gameService)
         {
             _playerHandler = playerHandler;
-            Initialize(gameService, bulletPoolHolder, playArea, playerHandler.Health);
+            Initialize(gameService, bulletPoolHolder, dataCollection.BulletDataCollection, playArea, playerHandler.Health, _playerHandler.BulletID);
             healthBar.Initialize(_healthHandler);
         }
 
@@ -37,8 +37,9 @@ namespace CEVerticalShooter.Game.Player
             _gameService.OnGameOver += GameService_OnGameOver;
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
             if(_gameService != null)
             { 
                 _gameService.OnNewGame -= GameService_OnNewGame;
@@ -84,8 +85,6 @@ namespace CEVerticalShooter.Game.Player
             Gizmos.color = Color.white;
             Gizmos.DrawWireCube(Vector3.zero, planeSize);
         }
-
-        public override bool TryToGetBulletDataWithID(BulletID id, out BulletData data) => _playerHandler.TryToGetBulletDataWithID(id, out data);
 
         public override void DealDamage(float damage)
         {

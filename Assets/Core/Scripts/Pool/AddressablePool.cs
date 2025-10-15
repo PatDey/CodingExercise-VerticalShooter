@@ -16,9 +16,12 @@ namespace CEVerticalShooter.Core
         private bool _isInitialized = false;
         public virtual void Return(PoolObject poolObjectToReturn)
         {
-            poolObjectToReturn.gameObject.SetActive(false);
-            poolObjectToReturn.transform.SetParent(transform);
-            _pool.Push(poolObjectToReturn);
+            if(!_pool.Contains(poolObjectToReturn))
+            { 
+                poolObjectToReturn.gameObject.SetActive(false);
+                poolObjectToReturn.transform.SetParent(transform);
+                _pool.Push(poolObjectToReturn);
+            }
         }
 
         public virtual async UniTask<PoolObject> TakeAsync(CancellationToken token)
@@ -34,8 +37,8 @@ namespace CEVerticalShooter.Core
                 nextElement = Instantiate(loadedAsset, transform).GetComponent<PoolObject>();
             }
             else
-                nextElement = _pool.Pop();     
-
+                nextElement = _pool.Pop();    
+                    
             nextElement.gameObject.SetActive(true);
 
             return nextElement;

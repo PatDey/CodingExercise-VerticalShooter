@@ -17,13 +17,13 @@ namespace CEVerticalShooter.Game.Enemy
         private float _flightTime = 0f;
 
         public void Initialize(EnemyHandler enemyHandler, PlayArea playArea, BulletPoolHolder bulletPoolHolder, EnemyPoolHolder enemyPoolHolder, 
-                                WinConditionTracker winConditionTracker, IScoreService scoreService, IGameService gameService)
+                                BulletDataCollection bulletDataCollection, WinConditionTracker winConditionTracker, IScoreService scoreService, IGameService gameService)
         {
             _enemyPoolHolder = enemyPoolHolder;
             _enemyHandler = enemyHandler;
             _scoreService = scoreService;
             _winConditionTracker = winConditionTracker;
-            Initialize(gameService, bulletPoolHolder, playArea, _enemyHandler.Health);
+            Initialize(gameService, bulletPoolHolder, bulletDataCollection, playArea, _enemyHandler.Health, _enemyHandler.BulletID);
 
             _lastAttackTime = Time.time;
             _flightTime = 0f;
@@ -35,8 +35,9 @@ namespace CEVerticalShooter.Game.Enemy
             _gameService.OnGameOver += GameService_OnGameOver;
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
             if(_gameService != null)
                 _gameService.OnGameOver -= GameService_OnGameOver;
         }
@@ -69,8 +70,6 @@ namespace CEVerticalShooter.Game.Enemy
         }
 
         private void ReturnToPool() => _enemyPoolHolder.ReturnPoolObjectWithID(_enemyHandler.ID, this);
-
-        public override bool TryToGetBulletDataWithID(BulletID id, out BulletData data) => _enemyHandler.TryToGetBulletDataWithID(id, out data);
 
         public override void DealDamage(float damage)
         {

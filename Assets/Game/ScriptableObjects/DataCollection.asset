@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DataCollection
   m_EditorClassIdentifier: Assembly-CSharp::CEVerticalShooter.Game.DataCollection
   playerData:
+    bulletID: 0
     movementSpeed: 1.5
     attackCooldown: 0.75
     health: 5
@@ -22,7 +23,8 @@ MonoBehaviour:
     lives: 3
   enemyDataCollection:
     data:
-    - movementSpeed: 0.13
+    - bulletID: 1
+      movementSpeed: 0.13
       attackCooldown: 3
       health: 1
       id: 0

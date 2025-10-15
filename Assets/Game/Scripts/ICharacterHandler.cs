@@ -5,9 +5,9 @@ namespace CEVerticalShooter.Game
 {
     public interface ICharacterHandler
     {
+        public BulletID BulletID { get; }
         public float MovementSpeed { get; }
         public float AttackCooldown { get; }
         public float Health { get; }
-        public bool TryToGetBulletDataWithID(BulletID id, out BulletData data);
     }
 }

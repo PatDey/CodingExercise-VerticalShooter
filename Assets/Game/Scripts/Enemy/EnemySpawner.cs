@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace CEVerticalShooter.Game.Enemy
 {
-    public class EnemySpawner : MonoBehaviour, IDisposable
+    public class EnemySpawner : MonoBehaviour
     {
         [Header("Components")]
         [SerializeField]
@@ -53,6 +53,9 @@ namespace CEVerticalShooter.Game.Enemy
         {
             if(_gameService != null)
                 _gameService.OnGameOver += GameService_OnGameOver;
+
+            _tokenSource?.Cancel();
+            _tokenSource?.Dispose();
         }
 
         private void GameService_OnGameOver()
@@ -60,6 +63,8 @@ namespace CEVerticalShooter.Game.Enemy
             _tokenSource.Cancel();
             _tokenSource.Dispose();
             _tokenSource = new CancellationTokenSource();
+            _lastSpawnTime = 0;
+            _isSpawning = false;
         }
 
         public void Update()
@@ -90,19 +95,14 @@ namespace CEVerticalShooter.Game.Enemy
 
                     EnemyController controller = await _enemyPoolHolder.GetPoolObjectWithIDAsync(randomEnemy, token);
                     controller.transform.position = startPosition;
-                    EnemyHandler enemyHandler = new EnemyHandler(data, _bulletDataCollection, flightCurve, curveOffset);
-                    controller.Initialize(enemyHandler, _playArea, _bulletPoolHolder, _enemyPoolHolder, _winConditionTracker, _scoreService, _gameService);
+                    EnemyHandler enemyHandler = new EnemyHandler(data, flightCurve, curveOffset);
+                    controller.Initialize(enemyHandler, _playArea, _bulletPoolHolder, _enemyPoolHolder, _bulletDataCollection, _winConditionTracker, _scoreService, _gameService);
                     await UniTask.WaitForSeconds(data.SpawnIntervall, cancellationToken: token);
                 }
             }
 
             _isSpawning = false;
             _lastSpawnTime = Time.time;
-        }
-
-        public void Dispose()
-        {
-            _tokenSource?.Dispose();
         }
     }
 }

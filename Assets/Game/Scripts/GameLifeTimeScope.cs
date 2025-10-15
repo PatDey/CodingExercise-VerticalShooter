@@ -24,7 +24,7 @@ namespace CEVerticalShooter.Game
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData).WithParameter(dataCollection.BulletDataCollection);
+            builder.Register<PlayerHandler>(Lifetime.Singleton).WithParameter(dataCollection.PlayerData);
             builder.Register<ScoreService>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<WinConditionTracker>(Lifetime.Singleton);
             builder.Register<WinConditionService>(Lifetime.Singleton).WithParameter(dataCollection.WinConditionDataCollection).AsImplementedInterfaces();

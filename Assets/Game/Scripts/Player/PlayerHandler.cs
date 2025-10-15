@@ -7,7 +7,7 @@ namespace CEVerticalShooter.Game.Player
     public class PlayerHandler : ICharacterHandler
     {
         private PlayerData _playerData;
-        private BulletDataCollection _bulletDataCollection;
+        public BulletID BulletID => _playerData.BulletID;
         public float MovementSpeed => _playerData.MovementSpeed;
         public float AttackCooldown => _playerData.AttackCooldown;
         public float Health => _playerData.Health;
@@ -15,12 +15,9 @@ namespace CEVerticalShooter.Game.Player
         public InputAction MoveInputAction => _playerData.MoveInputAction;
         public InputAction AttackInputAction => _playerData.AttackInputAction;
 
-        public bool TryToGetBulletDataWithID(BulletID id, out BulletData data) => _bulletDataCollection.TryToGetDataWithID(id, out data);
-
-        public PlayerHandler(PlayerData playerdata, BulletDataCollection bulletDataCollection)
+        public PlayerHandler(PlayerData playerdata)
         {
             _playerData = playerdata;
-            _bulletDataCollection = bulletDataCollection;
         }
     }
 }
