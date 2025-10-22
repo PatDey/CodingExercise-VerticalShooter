@@ -1,4 +1,4 @@
-using CEVerticalShooter.Core;
+using CEVerticalShooter.Core.Pool;
 using CEVerticalShooter.Game.Data;
 using Cysharp.Threading.Tasks;
 using System;
@@ -39,11 +39,11 @@ namespace CEVerticalShooter.Game
             _isInitialized = true;
         }
 
-        public virtual async UniTask<PoolObject> GetPoolObjectWithIDAsync(ID id, CancellationToken token)
+        public virtual async UniTask<PoolObject> GetPoolObjectWithIDAsync(ID id, bool isActive = true, CancellationToken token = default)
         {
             await UniTask.WaitUntil(() => _isInitialized, cancellationToken: token);
 
-            PoolObject controller = await _poolDictionary[id].TakeAsync(token);
+            PoolObject controller = await _poolDictionary[id].TakeAsync(isActive, token);
             return controller;
         }
 

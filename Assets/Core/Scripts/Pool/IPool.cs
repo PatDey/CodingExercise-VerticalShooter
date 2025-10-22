@@ -3,12 +3,12 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CEVerticalShooter.Core
+namespace CEVerticalShooter.Core.Pool
 {
     public interface IPool<T> where T : MonoBehaviour
     {
         public void Return(T poolObject);
-        public UniTask<T> TakeAsync(CancellationToken token);
+        public UniTask<T> TakeAsync(bool isActive, CancellationToken token);
         public UniTask InitializeAsync(AssetReference element);
     }
 }

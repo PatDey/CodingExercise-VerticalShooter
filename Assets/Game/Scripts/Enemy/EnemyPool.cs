@@ -1,4 +1,4 @@
-using CEVerticalShooter.Core;
+using CEVerticalShooter.Core.Pool;
 
 namespace CEVerticalShooter.Game.Enemy
 {

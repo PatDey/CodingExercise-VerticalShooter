@@ -4,7 +4,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace CEVerticalShooter.Core
+namespace CEVerticalShooter.Core.Pool
 {
     public abstract class AddressablePool<PoolObject> : MonoBehaviour, IPool<PoolObject> where PoolObject : MonoBehaviour
     {
@@ -14,6 +14,7 @@ namespace CEVerticalShooter.Core
         private AssetReference _poolElement;
         private Stack<PoolObject> _pool = new Stack<PoolObject>();
         private bool _isInitialized = false;
+        private GameObject _loadedAsset;
         public virtual void Return(PoolObject poolObjectToReturn)
         {
             if(!_pool.Contains(poolObjectToReturn))
@@ -24,7 +25,7 @@ namespace CEVerticalShooter.Core
             }
         }
 
-        public virtual async UniTask<PoolObject> TakeAsync(CancellationToken token)
+        public virtual async UniTask<PoolObject> TakeAsync(bool isActive = true, CancellationToken token = default)
         {
             if (!_isInitialized)
                 await UniTask.WaitUntil(() => _isInitialized, cancellationToken: token);
@@ -32,14 +33,11 @@ namespace CEVerticalShooter.Core
             PoolObject nextElement = null;
 
             if(_pool.Count == 0)
-            { 
-                GameObject loadedAsset = await Addressables.LoadAssetAsync<GameObject>(_poolElement);
-                nextElement = Instantiate(loadedAsset, transform).GetComponent<PoolObject>();
-            }
+                nextElement = Instantiate(_loadedAsset, transform).GetComponent<PoolObject>();
             else
                 nextElement = _pool.Pop();    
                     
-            nextElement.gameObject.SetActive(true);
+            nextElement.gameObject.SetActive(isActive);
 
             return nextElement;
         }
@@ -49,11 +47,11 @@ namespace CEVerticalShooter.Core
                 return;
 
             _poolElement = element;
-            GameObject loadedAsset = await Addressables.LoadAssetAsync<GameObject>(_poolElement);
+            _loadedAsset = await Addressables.LoadAssetAsync<GameObject>(_poolElement);
 
             for(int i = 0; i < initialElements; i++) 
             {
-                GameObject newAsset = Instantiate(loadedAsset);
+                GameObject newAsset = Instantiate(_loadedAsset);
                 Return(newAsset.GetComponent<PoolObject>());
             }
        

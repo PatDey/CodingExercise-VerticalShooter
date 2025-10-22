@@ -1,6 +1,4 @@
 using CEVerticalShooter.Game.Data;
-using Cysharp.Threading.Tasks;
-using System.Threading;
 using VContainer;
 
 namespace CEVerticalShooter.Game.Bullet

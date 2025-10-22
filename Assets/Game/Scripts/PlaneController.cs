@@ -44,7 +44,7 @@ namespace CEVerticalShooter.Game
         {
             if (_bulletDataCollection.TryToGetDataWithID(_bulletID, out BulletData data))
             {
-                BulletController bulletController = await _bulletPoolHolder.GetPoolObjectWithIDAsync(_bulletID, _tokenSource.Token);
+                BulletController bulletController = await _bulletPoolHolder.GetPoolObjectWithIDAsync(_bulletID, token: _tokenSource.Token);
                 bulletController.Initialize(_bulletPoolHolder, data, _playArea, _gameService);
                 bulletController.transform.position = shootTransform.position;
                 bulletController.transform.up = shootTransform.up;
